@@ -1,0 +1,69 @@
+﻿@typeparam TModel
+<h3>GenericForm</h3>
+
+<EditForm Model="Model" OnValidSubmit="@( () => Save.InvokeAsync(Model) )">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+
+    @foreach (var row in Configuration)
+    {
+        <label for="@row.NameProperty">@row.Label</label>
+        switch (row.TypeField)
+        {
+            case TypeField.text:
+                <input id="@row.NameProperty" type="text" value="@((string) Model.GetType().GetProperty(row.NameProperty ).GetValue(Model))"
+                       @oninput="( value => setProperty(row.NameProperty,value.Value.ToString() ))"
+                       class="@row.cssClass" />
+
+                break;
+            case TypeField.number:
+                <input type="number" value="@((int) Model.GetType().GetProperty(row.NameProperty ).GetValue(Model))"
+                       @oninput="( value => setProperty(row.NameProperty,Convert.ToInt32( value.Value)))"
+                       class="@row.cssClass" />
+
+                break;
+
+            case TypeField.date:
+                <input type="date" value="@((DateTime) Model.GetType().GetProperty(row.NameProperty ).GetValue(Model))"
+                       @oninput="( value => setProperty(row.NameProperty,Convert.ToDateTime(value.Value) ))"
+                       class="@row.cssClass" />
+
+                break;
+        }
+
+    }
+    <input type="submit" value="Salva" />
+    <input type="button" value="Annulla" onclick="@Cancel" />
+</EditForm>
+
+@code {
+    [Parameter]
+    public TModel Model { get; set; }
+
+    [Parameter]
+    public List<Field> Configuration { get; set; }
+
+    [Parameter]
+    public EventCallback<TModel> Save { get; set; }
+
+    [Parameter]
+    public EventCallback Cancel { get; set; }
+
+    private void setProperty(string NameProperty, string value)
+    {
+        Model.GetType().GetProperty(NameProperty).SetValue(Model, value);
+        this.StateHasChanged();
+    }
+
+    private void setProperty(string NameProperty, int value)
+    {
+        Model.GetType().GetProperty(NameProperty).SetValue(Model, value);
+        this.StateHasChanged();
+    }
+
+    private void setProperty(string NameProperty, DateTime value)
+    {
+        Model.GetType().GetProperty(NameProperty).SetValue(Model, value);
+        this.StateHasChanged();
+    }
+}

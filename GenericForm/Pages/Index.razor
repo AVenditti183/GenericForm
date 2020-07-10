@@ -1,0 +1,28 @@
+﻿@page "/"
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+<GenericForm TModel="Person" Model="new Person()"
+            Configuration="@( new List<Field>()
+                              {
+                                  new Field("Cognome","LastName", TypeField.text,"form-text"),
+                                  new Field("Nome","FirstName", TypeField.text,"form-text"),
+                                  new Field("Data Di Nascita","BirthDay", TypeField.date,"form-text"),
+                                  new Field("Altezza","Height", TypeField.number,"form-text")
+                              })"
+             
+             >
+    
+</GenericForm>
+
+@code
+{
+
+    private void Save(Person item)
+    {
+
+    }
+}
