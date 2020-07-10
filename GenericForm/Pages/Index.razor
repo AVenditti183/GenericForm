@@ -5,7 +5,7 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
-<GenericForm TModel="Person" Model="new Person()"
+<GenericForm  Model="new Person()" Save="Save" TModel="Person"
             Configuration="@( new List<Field>()
                               {
                                   new Field("Cognome","LastName", TypeField.text,"form-text"),

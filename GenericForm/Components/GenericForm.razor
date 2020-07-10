@@ -24,7 +24,7 @@
                 break;
 
             case TypeField.date:
-                <input type="date" value="@((DateTime) Model.GetType().GetProperty(row.NameProperty ).GetValue(Model))"
+                <input type="date"   value="@((DateTime) Model.GetType().GetProperty(row.NameProperty ).GetValue(Model))"
                        @oninput="( value => setProperty(row.NameProperty,Convert.ToDateTime(value.Value) ))"
                        class="@row.cssClass" />
 
@@ -52,18 +52,15 @@
     private void setProperty(string NameProperty, string value)
     {
         Model.GetType().GetProperty(NameProperty).SetValue(Model, value);
-        this.StateHasChanged();
     }
 
     private void setProperty(string NameProperty, int value)
     {
         Model.GetType().GetProperty(NameProperty).SetValue(Model, value);
-        this.StateHasChanged();
     }
 
     private void setProperty(string NameProperty, DateTime value)
     {
-        Model.GetType().GetProperty(NameProperty).SetValue(Model, value);
-        this.StateHasChanged();
+        Model.GetType().GetProperty(NameProperty).SetValue(Model, value); 
     }
 }
